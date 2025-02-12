@@ -38,7 +38,21 @@ def forgot_password():
 def user():
     if "user" in session:
         user = session["user"]
-        return render_template("user.html", user = user)
+        email = None
+        name = None
+
+        if request.method == "POST":
+            email = request.form["email"]
+            session["email"] = email
+            name = request.form["name"]
+            session["name"] = name
+            flash("Name and Email was saved!")
+            return redirect(url_for("dashboard"))
+        else:
+            if "email" and "name" in session:
+                email = session["email"]
+                name = session["name"]
+        return render_template("user.html", name = name, email = email)
     else:
         flash("You are not logged in!","success")
         return redirect(url_for("login"))
@@ -48,11 +62,18 @@ def logout():
     if "user" in session:
         flash("You have been logged out successfully!","success")
         session.pop("user",None)
+        session.pop("email",None)
+        session.pop("name",None)
         return redirect(url_for("login"))
     else:
         flash("You have already logged out!")
         return redirect(url_for("login")) 
 
+@app.route("/dashboard")
+def dashboard():
+    if "name" and "email" in session:
+        return render_template("dashboard.html",name = session["name"],email= session["email"])
+    return redirect(url_for("login"))
 
 
 if __name__ == "__main__":

@@ -15,9 +15,9 @@
         <form action="#" method="post">
             <h2>Credentials</h2>
             <label for="username">Name</label>
-            <input type="text" name="username" placeholder="Enter name">
+            <input type="text" name="name" placeholder="Enter name" {% if name %} value="{{ name }}" {% endif %}>
             <label for="email">Email</label>
-            <input type="email" placeholder="Enter email" name="username" value="{{email if email }}">
+            <input type="email" placeholder="Enter email" name="email" {% if email %} value="{{ email }}" {% endif %}>
             <button type="submit" value="submit">Submit</button>
         </form>
     </div>

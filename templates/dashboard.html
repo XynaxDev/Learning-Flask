@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}
+    Dashboard
+{% endblock  %}
+
+{% block content %}
+    {% with messages = get_flashed_messages()  %}
+        {% if messages %}
+            {% for msg  in messages  %}
+                <div class="flash-message" id="flashMessage">
+                    {{ msg }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith  %}
+    <div class="f1">
+        <div class="card">
+            <h2>Dashboard</h2>
+            <p><strong>Name:</strong> {{name}}</p>
+            <p><strong>Email:</strong> <span class="email">{{email}}</span></p>
+        </div>
+    </div>
+    
+{% endblock %}
