@@ -5,12 +5,14 @@
     {% with messages = get_flashed_messages()  %}
         {% if messages %}
             {% for msg  in messages  %}
-                <p>{{msg}}</p>
+                <div class="flash-message-logout" id="flashMessage">
+                    {{ msg }}
+                </div>
             {% endfor %}
         {% endif %}
     {% endwith  %}
 <div class="f1">
-    <form method="post">
+    <form action="#" method="post">
         <h2>Login</h2>
         <label for="username">Username</label>
         <input type="text" id="username" name="username">
@@ -24,5 +26,14 @@
         </p>
     </form>
 </div>
+
+<script>
+    setTimeout(function() {
+        var flash_message = document.getElementById('flashMessage');
+        if(flash_message){
+            flash_message.remove();
+        }
+    },3000); // 3000ms = 3 seconds
+</script>
 
 {% endblock %}

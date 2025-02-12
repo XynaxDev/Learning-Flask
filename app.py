@@ -11,14 +11,6 @@ app.permanent_session_lifetime = timedelta(minutes=5)
 def home():
     return render_template("index.html")
 
-@app.route("/features")
-def features():
-    return render_template("features.html")
-
-@app.route("/pricing")
-def pricing():
-    return render_template("pricing.html")
-
 # Sessions
 @app.route("/login",methods=["GET","POST"])
 def login():
@@ -26,11 +18,11 @@ def login():
         session.permanent = True # It considers that the data will stay on the website tile the lifetime 
         user = request.form["username"]
         session["user"] = user
-        flash("Login Successful!")
+        flash("Login Successful!","success")
         return redirect(url_for("user"))
     else:
         if "user" in session:
-            flash("Already Logged in!")
+            flash("Already Logged in!","success")
             return redirect(url_for("user"))
         return render_template("login.html")
 
@@ -42,18 +34,18 @@ def forgot_password():
 
 
 
-@app.route("/user")
+@app.route("/user",methods=["GET","POST"])
 def user():
     if "user" in session:
         user = session["user"]
         return render_template("user.html", user = user)
     else:
-        flash("You are not logged in!")
+        flash("You are not logged in!","success")
         return redirect(url_for("login"))
 
 @app.route("/logout")
 def logout():
-    flash("You have been logged out successfully!","info")
+    flash("You have been logged out successfully!","success")
     session.pop("user",None)
     return redirect(url_for("login")) 
 

@@ -2,12 +2,32 @@
 {% block title %} User {% endblock %}
 
 {% block content %}
-    {% with messages = get_flashed_messages() %}
+    {% with messages = get_flashed_messages(with_categories = true) %}
         {% if messages %}
-            {% for msg in messages %}
-                <p>{{msg}}</p>
+            {% for category, msg in messages %}
+            <div class="flash-message" id="flashMessage">
+                {{ msg }}
+            </div>
             {% endfor %}
         {% endif %}
     {% endwith %}
-    <p>Welcome, {{user}}!</p>
+    <div class="f1">
+        <form action="#" method="post">
+            <h2>Credentials</h2>
+            <label for="username">Name</label>
+            <input type="text" name="username" placeholder="Enter name">
+            <label for="email">Email</label>
+            <input type="email" placeholder="Enter email" name="username" value="{{email if email }}">
+            <button type="submit" value="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        setTimeout(function() {
+            var flash_message = document.getElementById('flashMessage');
+            if(flash_message){
+                flash_message.remove();
+            }
+        },3000); // 3000ms = 3 seconds
+    </script>
 {% endblock %}
