@@ -1,12 +1,27 @@
 from flask import Flask,redirect,url_for,render_template,request,session,flash
 from datetime import timedelta
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.secret_key = "apak143"
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqllite:///user.sqlite3'
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.permanent_session_lifetime = timedelta(minutes=5)
 
-# In session : it stores data temporarily on the the website 
 
+db = SQLAlchemy(app)
+
+class users(db.Model):
+    _id = db.Column("id",db.Integer,primary_key = True)
+    name = db.Column(db.String(100))
+    email = db.Column(db.String(100))
+
+    def __init__(self,name,email):
+        self.name = name
+        self.email = email
+        
+
+# In session : it stores data temporarily on the the website 
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -49,7 +64,7 @@ def user():
             flash("Name and Email was saved!")
             return redirect(url_for("dashboard"))
         else:
-            if "email" and "name" in session:
+            if "email" in session and "name" in session:
                 email = session["email"]
                 name = session["name"]
         return render_template("user.html", name = name, email = email)
@@ -71,10 +86,11 @@ def logout():
 
 @app.route("/dashboard")
 def dashboard():
-    if "name" and "email" in session:
+    if "name" in session and "email" in session:
         return render_template("dashboard.html",name = session["name"],email= session["email"])
     return redirect(url_for("login"))
 
 
 if __name__ == "__main__":
+    db.create_all()
     app.run(debug=True)
