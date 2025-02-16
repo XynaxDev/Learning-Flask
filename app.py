@@ -1,10 +1,11 @@
+from mimetypes import inited
 from flask import Flask,redirect,url_for,render_template,request,session,flash
 from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.secret_key = "apak143"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqllite:///users.sqlite3'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.sqlite3'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.permanent_session_lifetime = timedelta(minutes=5)
 
@@ -21,7 +22,7 @@ class users(db.Model):
         self.email = email
         
 
-# In session : it stores data temporarily on the the website 
+# Session : it stores data temporarily on the the website 
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -32,9 +33,15 @@ def login():
     if request.method == "POST":
         session.permanent = True # It considers that the data will stay on the website tile the lifetime 
         user = request.form["username"]
+        password = request.form["password"]
+        if not (password and user):
+            flash("Username and password is required to login!", "danger")
+            return redirect(url_for("login"))
+        
         session["user"] = user
+        # session["password"] = password
         flash("Login Successful!","success")
-        return redirect(url_for("user"))
+        return redirect(url_for("user"))       
     else:
         if "user" in session:
             flash("Already Logged in!","success")
@@ -92,5 +99,6 @@ def dashboard():
 
 
 if __name__ == "__main__":
-    db.create_all()
+    with app.app_context():
+        db.create_all()
     app.run(debug=True)
