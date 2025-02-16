@@ -15,12 +15,12 @@
     <form action="#" method="post">
         <h2>Login</h2>
         <label for="username">Username</label>
-        <input type="text" id="username" name="username">
+        <input type="text" id="username" name="username" required>
 
         <label for="password">Password</label>
-        <input type="password" id="password" name="password">
+        <input type="password" id="password" name="password" required>
 
-        <button type="submit">Login</button>
+        <button style="margin-top: 10px;" type="submit">Login</button>
         <p style="text-align: right; margin-top: 10px;">
             <a href="{{ url_for('forgot_password') }}">Forgot Password?</a>
         </p>
