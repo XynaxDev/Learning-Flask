@@ -3,3 +3,4 @@ instance/
 data/
 export.py
 __pycache__/
+.env
