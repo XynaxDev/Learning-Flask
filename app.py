@@ -28,7 +28,6 @@ def login():
         #     return redirect(url_for("login"))
         
         session["user"] = user
-
         found_user = Users.query.filter_by(name=user).first()
 
         if found_user:
@@ -59,7 +58,6 @@ def user():
         current_user = session["user"]
 
         if request.method == "POST":
-            # FIX: Swap the retrieval so that 'email' comes from the "email" field and 'name' from the "name" field.
             email = request.form.get("email")
             name = request.form.get("name")
 

@@ -1,24 +1,44 @@
 {% extends 'base.html' %}
 {% block title %}
-    Dashboard
-{% endblock  %}
+Dashboard
+{% endblock %}
 
 {% block content %}
-    {% with messages = get_flashed_messages()  %}
+    {% with messages = get_flashed_messages() %}
         {% if messages %}
-            {% for msg  in messages  %}
+            {% for msg in messages %}
                 <div class="flash-message" id="flashMessage">
                     {{ msg }}
                 </div>
             {% endfor %}
         {% endif %}
-    {% endwith  %}
-    <div class="f1">
-        <div class="card">
-            <h2>Dashboard</h2>
-            <p><strong>Name:</strong> {{name}}</p>
-            <p><strong>Email:</strong> <span class="email">{{email}}</span></p>
-        </div>
-    </div>
-    
+{% endwith %}
+
+<div class="container">
+    <h2>Dashboard</h2>
+    <table class="table table-hover table-secondary">
+        <thead>
+            <tr>
+                <th scope="col">Sno</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in values %}
+                <tr class="table-light">
+                    <th scope="row">{{loop.index}}</th>
+                    <td>{{item.name}}</td>
+                    <td>{{item.email}}</td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+            
+        </tbody>
+    </table>
+</div>
+
+
+
 {% endblock %}

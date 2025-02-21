@@ -2,3 +2,4 @@ venv/
 instance/
 data/
 export.py
+__pycache__/

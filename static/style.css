@@ -14,6 +14,7 @@
     min-height: 100vh;
     background-color: #f9f9f9;
     font-family: 'Arial', sans-serif;
+    /* border: 1px solid black; */
 }
 
 /* Form Container */
@@ -21,8 +22,9 @@ form {
     width: 300px;
     padding: 20px;
     background: #ffffff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
+    /* border: 1px solid black; */
 }
 
 /* Form Heading */
